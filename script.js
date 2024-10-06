@@ -1,36 +1,30 @@
-//your JS code here. If required.
-function getNumbers() {
+function manipulateData() {
     return new Promise((resolve) => {
+        // Resolve with the initial array after 3 seconds
         setTimeout(() => {
-            resolve([1, 2, 3, 4]); // Resolving with the array after 3 seconds
+            resolve([1, 2, 3, 4]);
         }, 3000);
     });
 }
 
-function filterEvenNumbers(numbers) {
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            const evens = numbers.filter(num => num % 2 === 0);
-            document.getElementById("output").innerText = evens.join(', '); // Display even numbers
-            resolve(evens);
-        }, 1000); // 1 second delay
-    });
-}
-
-function multiplyNumbers(numbers) {
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            const multiplied = numbers.map(num => num * 2);
-            document.getElementById("output").innerText = multiplied.join(', '); // Display multiplied numbers
-            resolve(multiplied);
-        }, 2000); // 2 seconds delay
-    });
-}
-
-// Chaining the promises
-getNumbers()
-    .then(filterEvenNumbers)
-    .then(multiplyNumbers)
-    .catch((error) => {
-        console.error("An error occurred:", error);
+manipulateData()
+    .then(array => {
+        // Filter out odd numbers and log the result after 1 second
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                const evenNumbers = array.filter(num => num % 2 === 0);
+                document.getElementById('output').textContent = evenNumbers.join(', ');
+                resolve(evenNumbers);
+            }, 1000);
+        });
+    })
+    .then(evenNumbers => {
+        // Multiply even numbers by 2 and log the result after 2 seconds
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                const multipliedNumbers = evenNumbers.map(num => num * 2);
+                document.getElementById('output').textContent = multipliedNumbers.join(', ');
+                resolve(multipliedNumbers);
+            }, 2000);
+        });
     });
